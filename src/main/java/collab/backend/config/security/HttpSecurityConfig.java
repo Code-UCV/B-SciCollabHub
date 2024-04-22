@@ -1,8 +1,13 @@
 package collab.backend.config.security;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -11,15 +16,27 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import collab.backend.util.Role;
 
 @Component
 @EnableWebSecurity
 @EnableMethodSecurity
 public class HttpSecurityConfig {
+    @Value("#{'${cors.allowed-methods}'.split(',')}")
+    private List<String> allowedMethods;
+
+    @Value("#{'${cors.allowed-headers}'.split(',')}")
+    private List<String> allowedHeaders;
+
+    @Value("#{'${cors.exposed-headers}'.split(',')}")
+    private List<String> expectedHeaders;
+
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
@@ -29,6 +46,8 @@ public class HttpSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable())
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .exceptionHandling(customizer -> customizer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
         .sessionManagement(sessionManagment -> sessionManagment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -37,13 +56,26 @@ public class HttpSecurityConfig {
         return httpSecurity.build();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        config.setAllowedMethods(allowedMethods);
+        config.setAllowedHeaders(allowedHeaders);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+
     private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> builderRequests() {
         return authConfig -> {
             authConfig.requestMatchers(HttpMethod.GET, "/").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/user/signup").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/user/login").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/user/logout").hasRole(Role.STUDENT.name());
-            authConfig.requestMatchers(HttpMethod.GET, "/welcome").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/api/signup").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/api/logout").hasRole(Role.STUDENT.name());
+            //authConfig.requestMatchers(HttpMethod.GET, "/user/welcome").hasRole(Role.STUDENT.name());
+            authConfig.requestMatchers(HttpMethod.GET, "/api/verify-jwt").hasRole(Role.STUDENT.name());
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();
         };

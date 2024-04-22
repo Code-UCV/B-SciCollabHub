@@ -1,6 +1,8 @@
 package collab.backend.config.Services;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 
@@ -20,15 +22,20 @@ public class JwtService {
     @Value("${security.jwt.secret-key}")
     private String SECRET_KEY;
 
-    @Value("${security.jwt.expiration-time}")
-    private static long EXPIRATION_TIME;
+    //@Value("${security.jwt.expiration-time}")
+    //private static long EXPIRATION_TIME;
 
     public String generateToken (User user, Map<String, Object> extraClaims) {
+        LocalDateTime emitedTime = LocalDateTime.now();
+        LocalDateTime expirationTime = emitedTime.plusMinutes(1440);
+        Date issuedAt = Date.from(emitedTime.atZone(ZoneId.systemDefault()).toInstant());
+        Date expiration = Date.from(expirationTime.atZone(ZoneId.systemDefault()).toInstant());
+        
         return Jwts.builder()
         .setClaims(extraClaims)
         .setSubject(user.getUsername())
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+        .setIssuedAt(issuedAt)
+        .setExpiration(expiration)
         .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
         .signWith(generateKey(), SignatureAlgorithm.HS256)
         .compact();

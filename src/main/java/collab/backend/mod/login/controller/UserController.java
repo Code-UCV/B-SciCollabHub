@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,8 @@ import collab.backend.mod.login.model.User;
 import collab.backend.mod.login.services.UserService;
 
 @RestController
-@RequestMapping("/user")
+@CrossOrigin("http://localhost:3000")
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     UserService userService;
@@ -45,11 +47,4 @@ public class UserController {
         AuthenticationResponse jwt = authService.login(authRequest);
         return ResponseEntity.ok(jwt);
     }
-
-    /*@PostMapping("/logout")
-    public ResponseEntity<?> logout(
-        @RequestBody AuthenticationResponse token
-    ) {
-        return authService.logout(token);
-    }*/
 }
