@@ -1,5 +1,7 @@
 package collab.backend.mod.login.controller;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import collab.backend.mod.login.model.User;
 import collab.backend.mod.login.services.UserService;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:3000") // Or IP ADDRESS (example): 192.168.100.20
 @RequestMapping("/api")
 public class UserController {
     @Autowired
@@ -40,11 +42,28 @@ public class UserController {
         return userService.addUser(userSignup);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login") //create token
     public ResponseEntity<AuthenticationResponse> login(
         @Valid @RequestBody AuthenticationRequest authRequest
     ) {
         AuthenticationResponse jwt = authService.login(authRequest);
         return ResponseEntity.ok(jwt);
+    }
+
+    /*
+     * Utilize Map because will send it a JSON
+     */
+    @PostMapping("/verify-jwt")
+    public ResponseEntity<Boolean> verifyToken (
+        @Valid @RequestBody Map<String, String> requestBody
+    ) {
+        boolean isAuthenticatedJWT = authService.verifyJWT(requestBody);
+
+        if (!isAuthenticatedJWT) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(isAuthenticatedJWT);
+        }
+
+        return ResponseEntity.ok(isAuthenticatedJWT);
     }
 }

@@ -60,7 +60,7 @@ public class HttpSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        config.setAllowedOrigins(Arrays.asList("http://192.168.18.26:3000"));
         config.setAllowedMethods(allowedMethods);
         config.setAllowedHeaders(allowedHeaders);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -74,8 +74,7 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.POST, "/api/signup").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/api/logout").hasRole(Role.STUDENT.name());
-            //authConfig.requestMatchers(HttpMethod.GET, "/user/welcome").hasRole(Role.STUDENT.name());
-            authConfig.requestMatchers(HttpMethod.GET, "/api/verify-jwt").hasRole(Role.STUDENT.name());
+            authConfig.requestMatchers(HttpMethod.POST, "/api/verify-jwt").permitAll();
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();
         };
