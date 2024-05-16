@@ -22,6 +22,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import collab.backend.util.Permission;
 import collab.backend.util.Role;
 
 @Component
@@ -60,7 +62,7 @@ public class HttpSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://192.168.18.26:3000"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         config.setAllowedMethods(allowedMethods);
         config.setAllowedHeaders(allowedHeaders);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -69,12 +71,18 @@ public class HttpSecurityConfig {
     }
 
     private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> builderRequests() {
+        /*
+         * 'Verify-jwt' it's just a jwt verification for the frontend not the backend.
+         */
         return authConfig -> {
             authConfig.requestMatchers(HttpMethod.GET, "/").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/api/signup").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/api/logout").hasRole(Role.STUDENT.name());
-            authConfig.requestMatchers(HttpMethod.POST, "/api/verify-jwt").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/auth/logout").hasRole(Role.STUDENT.name());
+            authConfig.requestMatchers(HttpMethod.POST, "/auth/verify-jwt").permitAll();
+            
+            authConfig.requestMatchers(HttpMethod.GET, "/usr/data/rankbyuser").hasAuthority(Permission.LOGGED.name());
+            
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();
         };

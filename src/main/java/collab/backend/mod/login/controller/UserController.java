@@ -23,7 +23,7 @@ import collab.backend.mod.login.services.UserService;
 
 @RestController
 @CrossOrigin("http://localhost:3000") // Or IP ADDRESS (example): 192.168.100.20
-@RequestMapping("/api")
+@RequestMapping("/auth")
 public class UserController {
     @Autowired
     UserService userService;

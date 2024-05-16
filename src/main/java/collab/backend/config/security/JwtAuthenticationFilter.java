@@ -59,19 +59,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         filterChain.doFilter(request, response);
     }
-
-    private Optional<String> parseAccessToken(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        /* 
-         * StringUtils.hasText(...) is a utility method provided 
-         * by the Spring Framework for validating whether a given
-         * String is not null... After trimming whitespaces.
-         */ 
-        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
-            return Optional.of(authHeader.replace("Bearer ", ""));
-        }
-
-        return Optional.empty();
-    }
     
 }
