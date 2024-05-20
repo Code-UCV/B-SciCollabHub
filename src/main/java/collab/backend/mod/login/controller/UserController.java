@@ -1,6 +1,7 @@
 package collab.backend.mod.login.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -10,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +22,7 @@ import collab.backend.config.Services.AuthenticationService;
 import collab.backend.mod.login.dto.AuthenticationRequest;
 import collab.backend.mod.login.dto.AuthenticationResponse;
 import collab.backend.mod.login.model.User;
+import collab.backend.mod.login.services.EmailService;
 import collab.backend.mod.login.services.UserService;
 
 @RestController
@@ -27,6 +31,9 @@ import collab.backend.mod.login.services.UserService;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     PasswordEncoder passwordEncoder;

@@ -77,11 +77,19 @@ public class HttpSecurityConfig {
         return authConfig -> {
             authConfig.requestMatchers(HttpMethod.GET, "/").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll();
+
+            authConfig.requestMatchers(HttpMethod.PUT, "/email/unknown/forgotpassword").permitAll();
+            authConfig.requestMatchers(HttpMethod.PUT, "/email/validatecode").permitAll();
+            authConfig.requestMatchers(HttpMethod.PUT, "/email/known/setpassword").permitAll();
+
             authConfig.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/auth/logout").hasRole(Role.STUDENT.name());
             authConfig.requestMatchers(HttpMethod.POST, "/auth/verify-jwt").permitAll();
             
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/rankbyuser").hasAuthority(Permission.LOGGED.name());
+
+            /*Testing POO*/
+            authConfig.requestMatchers(HttpMethod.POST, "/test/poo/1").hasAuthority(Permission.LOGGED.name());
             
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();

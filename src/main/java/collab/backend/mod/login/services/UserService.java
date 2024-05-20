@@ -1,6 +1,5 @@
 package collab.backend.mod.login.services;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,10 +23,6 @@ public class UserService {
     public User addUser(User user) {
         user.setId(UUID.randomUUID().toString().split("-")[0]);
         return userRepository.save(user);
-    }
-
-    public List<User> findAllUsers() { //remove this
-        return userRepository.findAll();
     }
 
     public User getUserById(String id) {

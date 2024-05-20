@@ -27,6 +27,9 @@ public class User implements UserDetails {
     private String id;
     @Indexed(unique = true)
     @NonNull
+    private String email;
+    @Indexed(unique = true)
+    @NonNull
     private String codeAlumni;
     @Indexed(unique = true)
     @NonNull
