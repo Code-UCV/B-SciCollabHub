@@ -81,6 +81,9 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.PUT, "/email/unknown/forgotpassword").permitAll();
             authConfig.requestMatchers(HttpMethod.PUT, "/email/validatecode").permitAll();
             authConfig.requestMatchers(HttpMethod.PUT, "/email/known/setpassword").permitAll();
+            
+            // Unable 'cause the password was encrypted by hash
+            //authConfig.requestMatchers(HttpMethod.PUT, "/email/unknown/recoverypassword").permitAll();
 
             authConfig.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/auth/logout").hasRole(Role.STUDENT.name());
