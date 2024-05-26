@@ -86,11 +86,22 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.POST, "/auth/logout").hasRole(Role.STUDENT.name());
             authConfig.requestMatchers(HttpMethod.POST, "/auth/verify-jwt").permitAll();
             
+            /*
+             * Profile Data
+             */
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/rankbyuser").hasAuthority(Permission.LOGGED.name());
+            authConfig.requestMatchers(HttpMethod.GET, "/usr/data/pointsbyusername").hasAuthority(Permission.LOGGED.name());
 
-            /*Testing POO*/
-            authConfig.requestMatchers(HttpMethod.POST, "/test/poo/1").hasAuthority(Permission.LOGGED.name());
+            /*
+             * Testing POO
+             */
+            authConfig.requestMatchers(HttpMethod.POST, "/test/poo/clasealumno").hasAuthority(Permission.LOGGED.name());
             
+            /*
+             * Podio
+             */
+            authConfig.requestMatchers(HttpMethod.GET, "/q/rankingpositions").hasAuthority(Permission.LOGGED.name());
+
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();
         };

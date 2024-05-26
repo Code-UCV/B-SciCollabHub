@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Entity
-@Table(name = "user_account")
+@Table(name = "cuenta_usuarios")
 @Getter
 public class UserAccount {
     @Id

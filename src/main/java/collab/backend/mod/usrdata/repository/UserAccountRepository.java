@@ -11,11 +11,25 @@ import collab.backend.mod.usrdata.model.UserAccount;
 public interface UserAccountRepository extends JpaRepository<UserAccount, Integer> {
     @Query(
         value = "SELECT rank_ "+
-        "FROM user_account "+
+        "FROM ( "+
+        "   SELECT username, "+
+        "       ROW_NUMBER() OVER(ORDER BY puntos DESC) AS rank_ "+
+        "   FROM cuenta_usuarios "+
+        ") AS Ranked "+
         "WHERE username = :username",
         nativeQuery = true
     )
     Optional<String> getRankByUsername(
+        @Param("username") String username
+    );
+
+    @Query(
+        value = "SELECT puntos "+
+        "FROM cuenta_usuarios "+
+        "WHERE username = :username",
+        nativeQuery = true
+    )
+    Optional<String> getPointsByUsername(
         @Param("username") String username
     );
 }

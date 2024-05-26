@@ -86,12 +86,24 @@
     		<version>2.0.1.Final</version>
 		</dependency>
 
+		<dependency>
+    		<groupId>com.github.javaparser</groupId>
+    		<artifactId>javaparser-core</artifactId>
+    		<version>3.25.10</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!--<dependency>
+    		<groupId>jakarta.servlet</groupId>
+    		<artifactId>jakarta.servlet-api</artifactId>
+    		<version>6.0.0</version>
+    		<scope>provided</scope>
+		</dependency>-->
 
 		<!-- Autosave && autorun -->
 		<dependency>
