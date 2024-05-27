@@ -1,5 +1,6 @@
 package collab.backend.mod.usrdata.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,5 +13,10 @@ public class UserAccount {
     @Id
     private int id;
     private String username;
+    private String bio;
+    @Column(name = "ruta_foto")
+    private String routePhoto;
     private String rank_;
+    @Column(name = "puntos")
+    private String points;
 }

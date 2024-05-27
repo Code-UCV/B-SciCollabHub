@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +46,21 @@ public class UserAccountController {
         } catch (Exception nfe) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(nfe.getMessage());
+        }
+    }
+
+    @PutMapping("/edit/bio")
+    public ResponseEntity<?> editBio(
+        @Valid @RequestParam String bio,
+        @Valid @RequestParam String username
+    ) {
+        try {
+            userAccountServices.editBio(bio, username);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -96,6 +96,12 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/pointsbyusername").hasAuthority(Permission.LOGGED.name());
 
             /*
+             * Profile Edit
+             */
+            authConfig.requestMatchers(HttpMethod.PUT, "/usr/data/edit/addurls").hasAuthority(Permission.LOGGED.name());
+            authConfig.requestMatchers(HttpMethod.PUT, "/usr/data/edit/bio").hasAuthority(Permission.LOGGED.name());
+
+            /*
              * Testing POO
              */
             authConfig.requestMatchers(HttpMethod.POST, "/test/poo/clasealumno").hasAuthority(Permission.LOGGED.name());

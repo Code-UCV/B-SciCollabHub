@@ -2,12 +2,11 @@ package collab.backend.mod.usrdata.services;
 
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import collab.backend.mod.usrdata.model.UserAccount;
 import collab.backend.mod.usrdata.repository.UserAccountRepository;
 
 @Service
@@ -31,5 +30,11 @@ public class UserAccountServices {
             throw new RuntimeException(username+" hasn't points.");
 
         return points.get();
+    }
+
+    public void editBio(String bio, String username) {
+        UserAccount user = userAccountRepository.findByUsername(username).get();
+
+        userAccountRepository.updateBio(bio, user.getId());
     }
 }
