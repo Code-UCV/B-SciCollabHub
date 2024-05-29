@@ -37,3 +37,26 @@ cors:
 
 > [!IMPORTANT]
 > Descargar la base de datos [MySQL](https://gist.github.com/PineberryCode/f25ebe116b6ad6e0f28cbed79de2d7d8)
+
+- - -
+
+###### ¿Cómo crear un usuario?
+> Realiza una petición `POST` a esta ruta:
+```
+http://localhost:8080/auth/signup
+```
+> Configura la petición:
+- `body` -> `raw` -> `JSON`
+
+> Ejemplo del `JSON` a enviar:
+```JSON
+{
+    "codeAlumni": "7777777777",
+    "email": "alumni@ucvvirtual.edu.pe",
+    "username": "alum2024",
+    "names": "namexample",
+    "lastNames": "lastnamexample",
+    "password": "123",
+    "role": "STUDENT"
+}
+```
