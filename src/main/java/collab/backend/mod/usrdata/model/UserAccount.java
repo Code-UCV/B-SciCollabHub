@@ -16,7 +16,6 @@ public class UserAccount {
     private String bio;
     @Column(name = "ruta_foto")
     private String routePhoto;
-    private String rank_;
     @Column(name = "puntos")
     private String points;
 }
