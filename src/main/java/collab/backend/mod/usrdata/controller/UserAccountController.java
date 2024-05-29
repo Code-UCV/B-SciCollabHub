@@ -49,6 +49,15 @@ public class UserAccountController {
         }
     }
 
+    @GetMapping("/alldatauser")
+    public ResponseEntity<String> getAllDataByUsername(
+        @Valid @RequestParam("username") String username
+    ) {
+        String allData = userAccountServices.getAllDataUser(username);
+        
+        return ResponseEntity.ok(allData);
+    }
+
     @PutMapping("/edit/bio")
     public ResponseEntity<?> editBio(
         @Valid @RequestParam String bio,
@@ -62,5 +71,25 @@ public class UserAccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/edit/addurls")
+    public ResponseEntity<?> addUrls(
+        @Valid @RequestParam String link,
+        @Valid @RequestParam String username
+    ) {
+        try {
+            userAccountServices.addUrls(link, username);
+            return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        } catch (UsernameNotFoundException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e);
+        }
+    }
+
+    @GetMapping("/allusernames")
+    public ResponseEntity<String> getAllUsers() {
+        return ResponseEntity.ok(userAccountServices.allUsers());
     }
 }

@@ -49,4 +49,11 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
         @Param("bio") String bio,
         @Param("id") int id
     );
+
+    @Query(
+        value = "SELECT username "+
+        "FROM cuenta_usuarios",
+        nativeQuery = true
+    )
+    String[] allUsers();
 }

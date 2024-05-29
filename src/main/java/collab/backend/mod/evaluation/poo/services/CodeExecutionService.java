@@ -1,4 +1,4 @@
-package collab.backend.mod.test.poo.services;
+package collab.backend.mod.evaluation.poo.services;
 
 import org.springframework.stereotype.Service;
 

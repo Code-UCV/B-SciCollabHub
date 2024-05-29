@@ -1,4 +1,4 @@
-package collab.backend.mod.test.poo.controller;
+package collab.backend.mod.evaluation.poo.controller;
 
 import java.util.Optional;
 
