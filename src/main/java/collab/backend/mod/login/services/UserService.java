@@ -1,7 +1,9 @@
 package collab.backend.mod.login.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,20 @@ public class UserService {
 
     public User getUserById(String id) {
         return userRepository.findById(id).get();
+    }
+
+    public String allUsers() {
+        String userData = userRepository.findAll()
+        .stream().filter(e -> e.getRole().toString() != "ADMIN")
+        .map(element -> element.getId()+"-"+
+            element.getEmail()+"-"+
+            element.getCodeAlumni()+"-"+
+            element.getUsername()+"-"+
+            element.getNames()+"-"+
+            element.getLastNames()+"-"+
+            element.isEnabled()
+        ).collect(Collectors.joining(","));
+        
+        return userData;
     }
 }

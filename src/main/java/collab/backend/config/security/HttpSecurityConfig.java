@@ -84,7 +84,9 @@ public class HttpSecurityConfig {
             
             // Unable 'cause the password was encrypted by hash
             //authConfig.requestMatchers(HttpMethod.PUT, "/email/unknown/recoverypassword").permitAll();
-
+            /*
+             * Login
+             */
             authConfig.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
             authConfig.requestMatchers(HttpMethod.POST, "/auth/logout").hasRole(Role.STUDENT.name());
             authConfig.requestMatchers(HttpMethod.POST, "/auth/verify-jwt").permitAll();
@@ -111,6 +113,11 @@ public class HttpSecurityConfig {
              * Podio
              */
             authConfig.requestMatchers(HttpMethod.GET, "/q/rankingpositions").hasAuthority(Permission.LOGGED.name());
+
+            /*
+             * Admin
+             */
+            authConfig.requestMatchers(HttpMethod.GET, "/admin/allusers").hasRole(Role.ADMIN.name());
 
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();

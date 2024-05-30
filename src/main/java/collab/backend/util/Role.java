@@ -7,7 +7,8 @@ import lombok.Getter;
 
 @Getter
 public enum Role {
-    STUDENT(Arrays.asList(Permission.LOGGED));
+    STUDENT(Arrays.asList(Permission.LOGGED)),
+    ADMIN(Arrays.asList(Permission.LOGGED));
     
     List<Permission> permissions;
 

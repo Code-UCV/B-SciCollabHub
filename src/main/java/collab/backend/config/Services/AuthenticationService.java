@@ -1,5 +1,8 @@
 package collab.backend.config.Services;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,24 +49,40 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwt);
     }
 
-    public Boolean verifyJWT(Map<String, String> requestBody) {
+    public String[] verifyJWT(Map<String, String> requestBody) {
         Boolean isAuthenticJWT = false;
         String jwt = requestBody.get("jwt");
+        String[] authRole = new String[2];
 
         byte[] secretKeyBytes = java.util.Base64.getDecoder().decode(SECRET_KEY);
         SecretKey secretKey = Keys.hmacShaKeyFor(secretKeyBytes);
         
         try {
             Claims claims = Jwts.parserBuilder()
-                .setSigningKey(secretKey).build().parseClaimsJws(jwt).getBody();   
+                .setSigningKey(secretKey).build().parseClaimsJws(jwt).getBody();
             
-            if (claims != null) { isAuthenticJWT = true; }
+            //Evaluate if the JWT is expired or is more then 1440 minutes (24 hours)
+            LocalDateTime currentTime = LocalDateTime.now();
+            Instant expirationInstant = claims.getExpiration().toInstant();
+            LocalDateTime expirationTime = LocalDateTime.ofInstant(expirationInstant, ZoneId.systemDefault()); 
+
+            if (expirationTime.isAfter(currentTime)) { 
+                isAuthenticJWT = true; 
+                authRole[0] = isAuthenticJWT.toString();
+                authRole[1] = claims.get("role").toString();
+            } else {
+                isAuthenticJWT = false;
+                authRole[0] = isAuthenticJWT.toString();
+                authRole[1] = "";
+            }
         } catch (Exception e) { 
             isAuthenticJWT = false;
-            return isAuthenticJWT;
+            authRole[0] = isAuthenticJWT.toString();
+            authRole[1] = "";
+            return authRole;
         }
 
-        return isAuthenticJWT;
+        return authRole;
 
     }
 

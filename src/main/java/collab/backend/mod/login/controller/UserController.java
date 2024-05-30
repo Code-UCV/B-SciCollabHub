@@ -1,7 +1,9 @@
 package collab.backend.mod.login.controller;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -61,16 +63,22 @@ public class UserController {
      * Utilize Map because will send it a JSON
      */
     @PostMapping("/verify-jwt")
-    public ResponseEntity<Boolean> verifyToken (
+    public ResponseEntity<String> verifyToken (
         @Valid @RequestBody Map<String, String> requestBody
     ) {
-        boolean isAuthenticatedJWT = authService.verifyJWT(requestBody);
+        String[] isAuthenticatedJWT = authService.verifyJWT(requestBody);
+        Boolean isAuth = Boolean.parseBoolean(isAuthenticatedJWT[0]);
+        String str = Arrays
+            .stream(isAuthenticatedJWT)
+            .collect(
+                Collectors.joining(",")
+            );
 
-        if (!isAuthenticatedJWT) {
+        if (!isAuth) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(isAuthenticatedJWT);
+                .body(str);
         }
 
-        return ResponseEntity.ok(isAuthenticatedJWT);
+        return ResponseEntity.ok(str);
     }
 }
