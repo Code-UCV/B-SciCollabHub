@@ -9,13 +9,15 @@ spring:
       uri: # Uri proporcionada por MongoDB Atlas
       database: # Nombre de la base de datos
   datasource:
-    url: 
+    url: jdbc:mysql//localhost:3306/dbvallecode
     username: root
     password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
   mail:
