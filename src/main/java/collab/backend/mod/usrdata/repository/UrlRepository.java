@@ -15,23 +15,23 @@ public interface UrlRepository extends JpaRepository<Url, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO urls "+
-        "(url, id_cuenta_usuarios) "+
-        "VALUES (:url, :fk_cuenta_usuarios)",
+    @Query(value = "INSERT INTO URLS "+
+        "(URL, ID_CUENTA_USUARIOS) "+
+        "VALUES (:URL, :FK_CUENTA_USUARIOS)",
         nativeQuery = true
     )
     public void addNewUrl(
-        @Param("url") String url,
-        @Param("fk_cuenta_usuarios") int idUser
+        @Param("URL") String url,
+        @Param("FK_CUENTA_USUARIOS") int idUser
     );
 
     @Query(
-        value = "SELECT url "+
-        "FROM urls "+
-        "WHERE id_cuenta_usuarios = :id",
+        value = "SELECT URL "+
+        "FROM URLS "+
+        "WHERE ID_CUENTA_USUARIOS = :ID",
         nativeQuery = true
     )
     public String[] findLinksById(
-        @Param("id") int idUser
+        @Param("ID") int idUser
     );
 }

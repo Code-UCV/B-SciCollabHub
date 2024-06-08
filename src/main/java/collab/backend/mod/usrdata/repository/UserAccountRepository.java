@@ -14,45 +14,45 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
     Optional<UserAccount> findByUsername(String username);
 
     @Query(
-        value = "SELECT rank_ "+
+        value = "SELECT RANK_ "+
         "FROM ( "+
-        "   SELECT username, "+
-        "       ROW_NUMBER() OVER(ORDER BY puntos DESC) AS rank_ "+
-        "   FROM cuenta_usuarios "+
-        ") AS Ranked "+
-        "WHERE username = :username",
+        "   SELECT USERNAME, "+
+        "       ROW_NUMBER() OVER(ORDER BY PUNTAJE DESC) AS RANK_ "+
+        "   FROM CUENTA_USUARIOS "+
+        ") AS RANKED "+
+        "WHERE USERNAME = :USERNAME",
         nativeQuery = true
     )
     Optional<String> getRankByUsername(
-        @Param("username") String username
+        @Param("USERNAME") String username
     );
 
     @Query(
-        value = "SELECT puntos "+
-        "FROM cuenta_usuarios "+
-        "WHERE username = :username",
+        value = "SELECT PUNTAJE "+
+        "FROM CUENTA_USUARIOS "+
+        "WHERE USERNAME = :USERNAME",
         nativeQuery = true
     )
     Optional<String> getPointsByUsername(
-        @Param("username") String username
+        @Param("USERNAME") String username
     );
 
     @Modifying
     @Transactional
     @Query(
-        value = "UPDATE cuenta_usuarios " +
-        "SET bio = :bio " + 
-        "WHERE id = :id",
+        value = "UPDATE CUENTA_USUARIOS " +
+        "SET BIO = :BIO " + 
+        "WHERE ID = :ID",
         nativeQuery = true
     )
     void updateBio(
-        @Param("bio") String bio,
-        @Param("id") int id
+        @Param("BIO") String bio,
+        @Param("ID") int id
     );
 
     @Query(
-        value = "SELECT username "+
-        "FROM cuenta_usuarios",
+        value = "SELECT USERNAME "+
+        "FROM CUENTA_USUARIOS",
         nativeQuery = true
     )
     String[] allUsers();

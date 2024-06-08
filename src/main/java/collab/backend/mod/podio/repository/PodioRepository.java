@@ -9,9 +9,9 @@ import collab.backend.mod.usrdata.model.UserAccount;
 
 public interface PodioRepository extends JpaRepository<UserAccount, Integer> {
     @Query(
-        value = "SELECT username, puntos " + 
-        "FROM cuenta_usuarios "+
-        "ORDER BY puntos DESC",
+        value = "SELECT USERNAME, PUNTAJE " + 
+        "FROM CUENTA_USUARIOS "+
+        "ORDER BY PUNTAJE DESC",
         nativeQuery = true
     )
     List<String[]> rankingUsers();

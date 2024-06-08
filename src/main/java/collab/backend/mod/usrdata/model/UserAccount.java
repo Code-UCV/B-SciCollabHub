@@ -6,12 +6,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "CUENTA_USUARIOS")
-@Getter
 public class UserAccount {
-    @Id
     @Column(name = "ID")
+    @Id
     private int id;
     @Column(name = "USERNAME")
     private String username;
@@ -20,5 +20,5 @@ public class UserAccount {
     @Column(name = "RUTA_FOTO")
     private String routePhoto;
     @Column(name = "PUNTAJE")
-    private String points;
+    private int points;
 }
