@@ -8,11 +8,13 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "urls")
+@Table(name = "URLS")
 public class Url {
     @Id
+    @Column(name = "ID")
     private int id;
+    @Column(name = "URL")
     private String url;
-    @Column(name = "id_cuenta_usuarios")
+    @Column(name = "ID_CUENTA_USUARIOS")
     private int userAccount;
 }

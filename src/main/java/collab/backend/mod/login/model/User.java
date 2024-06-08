@@ -3,8 +3,6 @@ package collab.backend.mod.login.model;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +15,6 @@ import com.mongodb.lang.NonNull;
 import collab.backend.util.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,10 +44,8 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    //@Getter(AccessLevel.NONE)
-    //@Setter(AccessLevel.NONE)
     @NonNull
-    private Boolean status = true;
+    private String status;
 
 
     @Override
@@ -72,6 +67,6 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() { return true; }
     @Override
     public boolean isEnabled() { 
-        return status; 
+        return true; 
     }
 }

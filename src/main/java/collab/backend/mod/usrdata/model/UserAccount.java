@@ -7,15 +7,18 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Entity
-@Table(name = "cuenta_usuarios")
+@Table(name = "CUENTA_USUARIOS")
 @Getter
 public class UserAccount {
     @Id
+    @Column(name = "ID")
     private int id;
+    @Column(name = "USERNAME")
     private String username;
+    @Column(name = "BIO")
     private String bio;
-    @Column(name = "ruta_foto")
+    @Column(name = "RUTA_FOTO")
     private String routePhoto;
-    @Column(name = "puntos")
+    @Column(name = "PUNTAJE")
     private String points;
 }

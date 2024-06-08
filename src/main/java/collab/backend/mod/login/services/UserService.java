@@ -1,6 +1,5 @@
 package collab.backend.mod.login.services;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class UserService {
             element.getUsername()+"-"+
             element.getNames()+"-"+
             element.getLastNames()+"-"+
-            element.isEnabled()
+            element.getStatus()
         ).collect(Collectors.joining(","));
         
         return userData;
