@@ -52,7 +52,7 @@ public class AuthenticationService {
     public String[] verifyJWT(Map<String, String> requestBody) {
         Boolean isAuthenticJWT = false;
         String jwt = requestBody.get("jwt");
-        String[] authRole = new String[2];
+        String[] authClaims = new String[3];
 
         byte[] secretKeyBytes = java.util.Base64.getDecoder().decode(SECRET_KEY);
         SecretKey secretKey = Keys.hmacShaKeyFor(secretKeyBytes);
@@ -65,24 +65,26 @@ public class AuthenticationService {
             LocalDateTime currentTime = LocalDateTime.now();
             Instant expirationInstant = claims.getExpiration().toInstant();
             LocalDateTime expirationTime = LocalDateTime.ofInstant(expirationInstant, ZoneId.systemDefault()); 
-
             if (expirationTime.isAfter(currentTime)) { 
                 isAuthenticJWT = true; 
-                authRole[0] = isAuthenticJWT.toString();
-                authRole[1] = claims.get("role").toString();
+                authClaims[0] = isAuthenticJWT.toString();
+                authClaims[1] = claims.get("role").toString();
+                authClaims[2] = claims.get("status").toString();
             } else {
                 isAuthenticJWT = false;
-                authRole[0] = isAuthenticJWT.toString();
-                authRole[1] = "";
+                authClaims[0] = isAuthenticJWT.toString();
+                authClaims[1] = "";
+                authClaims[2] = claims.get("status").toString();
             }
         } catch (Exception e) { 
             isAuthenticJWT = false;
-            authRole[0] = isAuthenticJWT.toString();
-            authRole[1] = "";
-            return authRole;
+            authClaims[0] = isAuthenticJWT.toString();
+            authClaims[1] = "";
+            authClaims[2] = "";
+            return authClaims;
         }
 
-        return authRole;
+        return authClaims;
 
     }
 
@@ -90,6 +92,7 @@ public class AuthenticationService {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", user.getRole().name());
         extraClaims.put("permissions", user.getAuthorities());
+        extraClaims.put("status", user.getStatus());
 
         return extraClaims;
     }

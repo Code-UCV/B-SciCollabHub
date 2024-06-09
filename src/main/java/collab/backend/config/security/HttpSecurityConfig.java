@@ -76,7 +76,6 @@ public class HttpSecurityConfig {
          */
         return authConfig -> {
             authConfig.requestMatchers(HttpMethod.GET, "/").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/admin/signup").hasRole(Role.ADMIN.name());
 
             authConfig.requestMatchers(HttpMethod.PUT, "/email/unknown/forgotpassword").permitAll();
             authConfig.requestMatchers(HttpMethod.PUT, "/email/validatecode").permitAll();
@@ -118,6 +117,8 @@ public class HttpSecurityConfig {
              * Admin
              */
             authConfig.requestMatchers(HttpMethod.GET, "/admin/allusers").hasRole(Role.ADMIN.name());
+            authConfig.requestMatchers(HttpMethod.POST, "/admin/signup").hasRole(Role.ADMIN.name());
+            authConfig.requestMatchers(HttpMethod.PUT, "/admin/disableorenableuser").hasRole(Role.ADMIN.name());
 
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();

@@ -44,4 +44,20 @@ public class UserService {
         
         return userData;
     }
+
+    public User disableOrEnableUser(String id) {
+        User u = userRepository.findById(id)
+            .orElseThrow(() -> {
+                throw new RuntimeException("User not found!");
+        });
+
+        if (u.getStatus().equals("Habilitado")) {
+            u.setStatus("Inhabilitado");
+            return userRepository.save(u);
+        } else {
+            u.setStatus("Habilitado");
+            return userRepository.save(u);
+        }
+
+    }
 }

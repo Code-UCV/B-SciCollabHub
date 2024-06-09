@@ -68,6 +68,11 @@ public class UserController {
                 .body(str);
         }
 
+        if (isAuthenticatedJWT[2] == "Inhabilitado") {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(str);
+        }
+
         return ResponseEntity.ok(str);
     }
 }
