@@ -59,6 +59,7 @@ http://localhost:8080/auth/signup
     "names": "namexample",
     "lastNames": "lastnamexample",
     "password": "123",
-    "role": "STUDENT"
+    "role": "STUDENT",
+    "status": true
 }
 ```
