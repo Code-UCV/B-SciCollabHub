@@ -76,7 +76,7 @@ public class HttpSecurityConfig {
          */
         return authConfig -> {
             authConfig.requestMatchers(HttpMethod.GET, "/").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/admin/signup").hasRole(Role.ADMIN.name());
 
             authConfig.requestMatchers(HttpMethod.PUT, "/email/unknown/forgotpassword").permitAll();
             authConfig.requestMatchers(HttpMethod.PUT, "/email/validatecode").permitAll();

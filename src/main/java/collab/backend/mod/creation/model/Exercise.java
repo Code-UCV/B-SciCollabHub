@@ -19,6 +19,8 @@ public class Exercise {
     private String topic;
     @Column(name = "TÍTULO")
     private String title;
+    @Column(name = "CATEGORÍA")
+    private String category;
     @Column(name = "PUNTOS")
     private String points;
 }

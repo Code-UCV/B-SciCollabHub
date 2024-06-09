@@ -32,7 +32,7 @@ public class UserService {
 
     public String allUsers() {
         String userData = userRepository.findAll()
-        .stream().filter(e -> e.getRole().toString() != "ADMIN")
+        .stream().filter(e -> String.valueOf(e.getRole()) != "ADMIN")
         .map(element -> element.getId()+"-"+
             element.getEmail()+"-"+
             element.getCodeAlumni()+"-"+

@@ -47,7 +47,6 @@ public class User implements UserDetails {
     @NonNull
     private String status;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = role.getPermissions().stream()

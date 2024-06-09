@@ -38,18 +38,7 @@ public class UserController {
     EmailService emailService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     AuthenticationService authService;
-
-    @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody User userSignup) {
-        String passwordEncoded = passwordEncoder.encode(userSignup.getPassword());
-        userSignup.setPassword(passwordEncoded);
-        return userService.addUser(userSignup);
-    }
 
     @PostMapping("/login") //create token
     public ResponseEntity<AuthenticationResponse> login(
