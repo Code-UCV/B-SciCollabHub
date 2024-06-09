@@ -60,6 +60,6 @@ http://localhost:8080/auth/signup
     "lastNames": "lastnamexample",
     "password": "123",
     "role": "STUDENT",
-    "status": true
+    "status": "Habilitado"
 }
 ```
