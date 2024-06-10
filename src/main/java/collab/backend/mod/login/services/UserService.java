@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import collab.backend.mod.login.model.User;
 import collab.backend.mod.login.repository.UserRepository;
+import collab.backend.mod.usrdata.model.UserAccount;
+import collab.backend.mod.usrdata.repository.UserAccountRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -16,6 +18,9 @@ import lombok.AllArgsConstructor;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
+    private final UserAccountRepository userAccountRepository;
     
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -23,7 +28,14 @@ public class UserService {
 
     public User addUser(User user) {
         user.setId(UUID.randomUUID().toString().split("-")[0]);
+        addUserAccountJustUsername(user.getUsername());
         return userRepository.save(user);
+    }
+
+    private void addUserAccountJustUsername(String username) {
+        UserAccount u = new UserAccount();
+        u.setUsername(username);
+        userAccountRepository.save(u);
     }
 
     public User getUserById(String id) {
