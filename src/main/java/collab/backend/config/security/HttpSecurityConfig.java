@@ -104,10 +104,15 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.PUT, "/usr/data/edit/bio").hasAuthority(Permission.LOGGED.name());
 
             /*
-             * Testing POO
+             * Testing OOP
              */
             authConfig.requestMatchers(HttpMethod.POST, "/test/poo/clasealumno").hasAuthority(Permission.LOGGED.name());
             
+            /*
+             * Testing DataStructure
+             */
+            authConfig.requestMatchers(HttpMethod.POST, "/test/ds/findtheoddnumbers").permitAll();//hasRole(Role.STUDENT.name());
+
             /*
              * Podio
              */

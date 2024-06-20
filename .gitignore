@@ -38,3 +38,5 @@ build/
 ### Project ###
 application.yml
 note.txt
+/temp/*.java
+/temp/*.class

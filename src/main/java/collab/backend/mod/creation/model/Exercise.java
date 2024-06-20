@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "EJERCICIOS")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Exercise {
     @Id
@@ -32,7 +35,7 @@ public class Exercise {
     @Column(name = "CATEGORÍA")
     private String category;
     @Column(name = "PUNTOS")
-    private int points;
+    private Integer points;
     @Column(name = "ETIQUETA")
     private String label;
     @Lob
