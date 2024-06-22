@@ -13,7 +13,7 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     Optional<Exercise> findExerciseByLabel(String label);
 
     @Query
-    (value = "SELECT ID, TÍTULO, TEMA, CATEGORÍA "+
+    (value = "SELECT ID, TÍTULO, TEMA, CATEGORÍA, ETIQUETA, ARCHIVO "+
     "FROM EJERCICIOS "+
     "WHERE TIPO_PROBLEMA = :TIPO_PROBLEMA",
     nativeQuery = true)
