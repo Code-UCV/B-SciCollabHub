@@ -126,6 +126,12 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.PUT, "/admin/disableorenableuser").hasRole(Role.ADMIN.name());
             authConfig.requestMatchers(HttpMethod.POST, "/admin/addnewexercise").hasRole(Role.ADMIN.name());
 
+            /*
+             * General Data
+             */
+            authConfig.requestMatchers(HttpMethod.PUT, "/showexercises").permitAll();
+            authConfig.requestMatchers(HttpMethod.PUT, "/exercisessolvedbyusername").hasAuthority(Permission.LOGGED.name());
+
             authConfig.requestMatchers(HttpMethod.GET, "/error").permitAll();
             authConfig.anyRequest().denyAll();
         };
