@@ -42,24 +42,32 @@ public class UserAccountServices {
 
     public String getAllDataUser(String username) {
         UserAccount user = userAccountRepository.findByUsername(username)
-        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));;
+        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
 
         String rank = userAccountRepository.getRankByUsername(username)
-        .orElseThrow(() -> new NoSuchElementException("No rank found for username: " + username));;
+        .orElseThrow(() -> new NoSuchElementException("No rank found for username: " + username));
 
         StringBuilder strBuilder = new StringBuilder();
 
-        String[] urls = urlRepository.findLinksById(user.getId());
-
-        // function foreach is a void
-        String result = Arrays.stream(urls)
-        .collect(Collectors.joining(","));
 
         strBuilder.append(
-            user.getBio()+","+result+","+rank+","+user.getPoints()
+            user.getBio()+"¬"+rank+"¬"+user.getPoints()
         );
 
         return strBuilder.toString();
+    }
+
+    public String showAllUrls(String username) {
+        UserAccount user = userAccountRepository.findByUsername(username)
+        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+
+        String[] urls = urlRepository.findLinksById(user.getId());
+
+        String result = Arrays.stream(urls)
+        .collect(Collectors.joining(","));
+
+        return result;
+        
     }
 
     public void editBio(String bio, String username) {

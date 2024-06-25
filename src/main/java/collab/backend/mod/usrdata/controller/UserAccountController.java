@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,20 @@ public class UserAccountController {
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getallurlsbyuser")
+    public ResponseEntity<?> getUrlsByUser(
+        @RequestParam("username") String username
+    ) {
+        try {
+            String strUrls = userAccountServices.showAllUrls(username);
+            return ResponseEntity.status(HttpStatus.OK)
+                .body(strUrls);
+        } catch (UsernameNotFoundException usernameNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(usernameNotFoundException.getMessage());
         }
     }
 

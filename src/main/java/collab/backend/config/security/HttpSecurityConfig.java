@@ -96,7 +96,8 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/rankbyuser").hasAuthority(Permission.LOGGED.name());
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/pointsbyusername").hasAuthority(Permission.LOGGED.name());
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/alldatauser").hasAuthority(Permission.LOGGED.name());
-            authConfig.requestMatchers(HttpMethod.GET, "usr/data/allusernames").permitAll();
+            authConfig.requestMatchers(HttpMethod.GET, "/usr/data/allusernames").permitAll();
+            authConfig.requestMatchers(HttpMethod.GET, "/usr/data/getallurlsbyuser").permitAll();
             /*
              * Profile Edit
              */
