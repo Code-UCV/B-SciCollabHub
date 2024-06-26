@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +60,21 @@ public class UserAccountController {
         } catch (Exception nfe) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(nfe.getMessage());
+        }
+    }
+
+    @GetMapping("/getpointsandcategory")
+    public ResponseEntity<?> getPointsAndCategoryByUsername(
+        @RequestParam("username") String username
+    ) {
+        try {
+            String pointsAndCategories = userAccountServices.getPointsAndCategoryByUsername(username);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                .body(pointsAndCategories);
+        } catch (UsernameNotFoundException usernameNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(usernameNotFoundException);
         }
     }
 

@@ -3,13 +3,13 @@ package collab.backend.mod.usrdata.services;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import collab.backend.mod.usrdata.model.Url;
 import collab.backend.mod.usrdata.model.UserAccount;
 import collab.backend.mod.usrdata.repository.UrlRepository;
 import collab.backend.mod.usrdata.repository.UserAccountRepository;
@@ -68,6 +68,23 @@ public class UserAccountServices {
 
         return result;
         
+    }
+
+    public String getPointsAndCategoryByUsername(String username) {
+        UserAccount user = userAccountRepository.findByUsername(username)
+        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+
+        StringJoiner rows = new StringJoiner("-");
+
+        for(String[] items : userAccountRepository.getPointsAndCategoryById(user.getId())) {
+            StringJoiner values = new StringJoiner(",");
+            for(String str : items ) {
+                values.add(str);
+            }
+            rows.add(String.valueOf(values));
+        }
+
+        return String.valueOf(rows);
     }
 
     public void editBio(String bio, String username) {

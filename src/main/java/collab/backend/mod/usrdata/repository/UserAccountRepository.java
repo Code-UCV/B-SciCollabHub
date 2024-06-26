@@ -1,5 +1,6 @@
 package collab.backend.mod.usrdata.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,6 +36,19 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
     )
     Optional<String> getPointsByUsername(
         @Param("USERNAME") String username
+    );
+
+    @Query(
+        value = "SELECT e.CATEGORÍA, SUM(e.PUNTOS) "+
+        "FROM CUENTA_X_EJERCICIOS c "+
+        "JOIN EJERCICIOS e "+
+        "ON e.ID = c.ID_EJERCICIO "+
+        "WHERE ID_CUENTA_USUARIO = :ID_USER "+
+        "GROUP BY e.CATEGORÍA",
+        nativeQuery = true
+    )
+    List<String[]> getPointsAndCategoryById(
+        @Param("ID_USER") int idUser
     );
 
     @Modifying

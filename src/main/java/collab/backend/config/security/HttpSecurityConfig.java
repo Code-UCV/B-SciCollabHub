@@ -98,6 +98,7 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/alldatauser").hasAuthority(Permission.LOGGED.name());
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/allusernames").permitAll();
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/getallurlsbyuser").permitAll();
+            authConfig.requestMatchers(HttpMethod.GET, "/usr/data/getpointsandcategory").permitAll();
             /*
              * Profile Edit
              */
