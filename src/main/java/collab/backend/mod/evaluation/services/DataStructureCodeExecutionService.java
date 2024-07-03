@@ -92,7 +92,7 @@ public class DataStructureCodeExecutionService {
         boolean[] resultTest = new boolean[2];
         try {
             //Class<?> clazzz = Class.forName("collab.mod.evaluation.model."+nameFileCreated.split(".")[0]);
-            File fileRoute = new File("/home/mindlunny/Documentos/UCV/ing-web/B-ValleCode/temp/");
+            File fileRoute = new File(System.getProperty("user.dir")+"/temp/");
             URL url = fileRoute.toURI().toURL();
             URL[] urls = new URL[]{url};
 
