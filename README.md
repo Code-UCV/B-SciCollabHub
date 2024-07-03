@@ -43,11 +43,31 @@ cors:
 - - -
 
 ###### ¿Cómo crear un usuario?
-> Realiza una petición `POST` a esta ruta:
+- Modificar el *endpoint* `admin/signup` a **permitAll()** para quitarle la autorización
+```JAVA
+  /*
+   * HttpSecurityConfig.java
+   */
+    authConfig.requestMatchers(HttpMethod.POST, "/admin/signup").permitAll();
 ```
-http://localhost:8080/admin/signup
+- Antes de crear un nuevo usuario con el rol **STUDENT**, necesitarás crear un usuario **ADMIN**:
+```JSON
+{
+    "codeAlumni": "5555555555",
+    "email": "admin@ucvvirtual.edu.pe",
+    "username": "admin",
+    "names": "",
+    "lastNames": "",
+    "password": "123",
+    "role": "ADMIN",
+    "status": "Habilitado"
+}
 ```
-> Configura la petición:
+> [!NOTE]
+> Realiza una petición `POST` a esta ruta: `http://localhost:8080/admin/signup`.
+> Puedes usar Postman para realizar las peticiones correspondientes.
+
+> Configurar la petición:
 - `body` -> `raw` -> `JSON`
 
 > Ejemplo del `JSON` a enviar:
