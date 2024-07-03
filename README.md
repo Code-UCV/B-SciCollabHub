@@ -75,7 +75,7 @@ cors:
 > Puedes usar Postman para realizar las peticiones correspondientes.
 
 > Configurar la petición:
-- `body` -> `raw` -> `JSON`
+- `body` > `raw` > `JSON`
 
 > Ejemplo del `JSON` a enviar:
 ```JSON
