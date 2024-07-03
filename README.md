@@ -1,6 +1,6 @@
 # B-ValleCode
 
-Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
+#### Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
 ```YML
 # Modelo
 spring:
@@ -43,7 +43,7 @@ cors:
 - - -
 
 ###### ¿Cómo crear un usuario?
-- Modificar el *endpoint* `admin/signup` a **permitAll()** para quitarle la autorización
+- Modificar el *endpoint* `admin/signup` a **permitAll()** para deshabilitar la autorización.
 ```JAVA
   /*
    * HttpSecurityConfig.java
