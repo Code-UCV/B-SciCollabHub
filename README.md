@@ -45,7 +45,7 @@ cors:
 ###### ¿Cómo crear un usuario?
 > Realiza una petición `POST` a esta ruta:
 ```
-http://localhost:8080/auth/signup
+http://localhost:8080/admin/signup
 ```
 > Configura la petición:
 - `body` -> `raw` -> `JSON`
@@ -60,6 +60,6 @@ http://localhost:8080/auth/signup
     "lastNames": "lastnamexample",
     "password": "123",
     "role": "STUDENT",
-    "status": true
+    "status": "Habilitado"
 }
 ```
