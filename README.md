@@ -1,7 +1,11 @@
 # B-ValleCode
 
-#### Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
-```YML
+###### Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
+<details>
+  <summary><b>Modelo <i>application.yml</i></b></summary>
+
+  
+  ```YML
 # Modelo
 spring:
   data:
@@ -36,6 +40,9 @@ cors:
   allowed-headers: "*"
   exposed-headers: "*"
 ```
+
+</details>
+
 
 > [!IMPORTANT]
 > Descargar la base de datos [MySQL](https://gist.github.com/PineberryCode/f25ebe116b6ad6e0f28cbed79de2d7d8)
