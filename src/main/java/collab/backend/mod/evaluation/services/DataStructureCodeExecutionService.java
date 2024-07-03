@@ -10,7 +10,6 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.StringJoiner;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -35,7 +34,7 @@ public class DataStructureCodeExecutionService {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
-    private static final long TIMEOUT_SECONDS = 2;
+    //private static final long TIMEOUT_SECONDS = 2;
 
     public boolean evalFindTheOddNumbersFromAnArray(
         String labelExercise,
@@ -91,15 +90,13 @@ public class DataStructureCodeExecutionService {
         /* Result of tests */
         boolean[] resultTest = new boolean[2];
         try {
-            //Class<?> clazzz = Class.forName("collab.mod.evaluation.model."+nameFileCreated.split(".")[0]);
-            File fileRoute = new File(System.getProperty("user.dir")+"/temp/");
+            Path path = Paths.get(System.getProperty("user.dir"), "temp");
+            File fileRoute = path.toFile();
             URL url = fileRoute.toURI().toURL();
             URL[] urls = new URL[]{url};
 
             ClassLoader cl = new URLClassLoader(urls);
-            //String className = nameFileCreated;
             Class<?> clazz = cl.loadClass(nameFileCreated);
-
 
             try {
                 try {
@@ -120,7 +117,6 @@ public class DataStructureCodeExecutionService {
                 } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     throw new RuntimeException("Instance Exception: "+e.getMessage());
                 }
-                //assert method.toString() == "{7,7,3}" ;
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException("Method not found -> "+e.getMessage());
             } catch (SecurityException e) {
@@ -139,13 +135,11 @@ public class DataStructureCodeExecutionService {
         String userCode
     ) {
         //move all mod evaluation in another spring boot project
-        String root = System.getProperty("user.dir");
-        String dirLocation = root+"/temp/";
         String nameFile = "UserCodeModifiable"+username
             .substring(0,1).toUpperCase().trim()+username.substring(1,username.length());
         String extension = ".java";
-        String pathFile = dirLocation+nameFile+extension;
-        Path path = Paths.get(pathFile);
+        Path path = Paths.get(System.getProperty("user.dir"), "temp", nameFile+extension);
+        File fileRoute = path.toFile();
         
         userCode = userCode.replaceAll("\\\\n", "\n");
 
@@ -170,7 +164,7 @@ public class DataStructureCodeExecutionService {
             throw new RuntimeException("Error JavaCompiler");
         }
 
-        javaCompiler.run(null, null, null, "/home/mindlunny/Documentos/UCV/ing-web/B-ValleCode/temp/"+nameFile+extension);
+        javaCompiler.run(null, null, null, fileRoute.getPath());
 
         try {
             Files.writeString(path, structure);
