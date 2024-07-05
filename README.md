@@ -90,3 +90,8 @@ cors:
     "status": "Habilitado"
 }
 ```
+- - -
+
+#### Requisitos
+- Maven
+- JDK 17
