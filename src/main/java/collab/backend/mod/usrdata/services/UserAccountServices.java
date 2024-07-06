@@ -106,4 +106,27 @@ public class UserAccountServices {
 
         return Arrays.stream(users).collect(Collectors.joining(","));
     }
+
+    public String getExercisesSolvedByUser(String username) {
+        UserAccount user = userAccountRepository.findByUsername(username)
+            .orElseThrow(
+                () -> {
+                    throw new RuntimeException("User not found");
+                }
+            );
+        
+        int userId = user.getId();
+        
+        StringJoiner rows = new StringJoiner("-");
+
+        for (String[] row : userAccountRepository.getExercisesSolvedByUser(userId)) {
+            StringJoiner values = new StringJoiner(",");
+            for(String item : row ) {
+                values.add(item);
+            }
+            rows.add(String.valueOf(values));
+        }
+
+        return String.valueOf(rows);
+    }
 }

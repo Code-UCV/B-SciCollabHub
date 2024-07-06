@@ -121,4 +121,19 @@ public class UserAccountController {
     public ResponseEntity<String> getAllUsers() {
         return ResponseEntity.ok(userAccountServices.allUsers());
     }
+
+    @GetMapping("/get-solved-exercises-by-user")
+    public ResponseEntity<?> getSolvedExercisesByUser(
+        @RequestParam("username") String username
+    ) {
+        try {
+            String exercises = userAccountServices.getExercisesSolvedByUser(username);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                .body(exercises);
+        } catch (UsernameNotFoundException usernameNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(usernameNotFoundException);
+        }
+    }
 }

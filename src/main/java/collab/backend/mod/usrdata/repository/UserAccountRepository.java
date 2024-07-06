@@ -70,4 +70,17 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
         nativeQuery = true
     )
     String[] allUsers();
+
+    @Query(
+        value = "SELECT e.TÍTULO, e.PUNTOS, c.ESTADO "+
+        "FROM CUENTA_X_EJERCICIOS c "+
+        "JOIN EJERCICIOS e "+
+        "ON e.ID = c.ID_EJERCICIO "+
+        "WHERE c.ID_CUENTA_USUARIO = :ID",
+        nativeQuery = true
+    )
+    List<String[]> getExercisesSolvedByUser(
+        @Param("ID") int id
+    );
+
 }

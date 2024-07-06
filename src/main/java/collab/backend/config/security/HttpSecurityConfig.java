@@ -99,6 +99,7 @@ public class HttpSecurityConfig {
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/allusernames").permitAll();
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/getallurlsbyuser").permitAll();
             authConfig.requestMatchers(HttpMethod.GET, "/usr/data/getpointsandcategory").permitAll();
+            authConfig.requestMatchers(HttpMethod.GET, "/usr/data/get-solved-exercises-by-user").permitAll();
             /*
              * Profile Edit
              */
