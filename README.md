@@ -1,7 +1,7 @@
 # B-ValleCode
 
 ### Pasos generales:
-- Asegúrate que todas las dependencias y configuraciones se resuelvan correctamente en el nuevo entorno (Windows, Based on Linux, etc) con el siguiente comando:
+- Asegúrate que todas las dependencias y configuraciones se resuelvan correctamente en el nuevo entorno (Windows, Based on Linux, Mac OS) con el siguiente comando:
 
   ```TXT
   mvn clean install
