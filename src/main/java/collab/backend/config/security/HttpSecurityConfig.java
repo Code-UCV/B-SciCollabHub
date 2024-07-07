@@ -114,7 +114,7 @@ public class HttpSecurityConfig {
             /*
              * Testing DataStructure
              */
-            authConfig.requestMatchers(HttpMethod.POST, "/test/ds/findtheoddnumbers").permitAll();//hasRole(Role.STUDENT.name());
+            authConfig.requestMatchers(HttpMethod.POST, "/test/ds/findtheoddnumbers").hasRole(Role.STUDENT.name());
 
             /*
              * Podio
