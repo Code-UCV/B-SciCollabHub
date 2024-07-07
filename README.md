@@ -8,10 +8,11 @@
   ```
 
 
--  Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL:
+-  Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión al motor de base de datos **MySQL**:
   
     ```YML
     # Modelo
+    # Nombra al archivo de esta manera: application.yml
     spring:
       datasource:
         url: jdbc:mysql//localhost:3306/dbvallecode
