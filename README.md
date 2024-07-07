@@ -8,10 +8,6 @@
   ```YML
 # Modelo
 spring:
-  data:
-    mongodb:
-      uri: # Uri proporcionada por MongoDB Atlas
-      database: # Nombre de la base de datos
   datasource:
     url: jdbc:mysql//localhost:3306/dbvallecode
     username: root
