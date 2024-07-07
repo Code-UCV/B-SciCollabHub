@@ -45,7 +45,7 @@
 
 
 > [!IMPORTANT]
-> Descargar la base de datos [MySQL](https://gist.github.com/PineberryCode/f25ebe116b6ad6e0f28cbed79de2d7d8)
+> Script de la base de datos [MySQL](https://gist.github.com/PineberryCode/f25ebe116b6ad6e0f28cbed79de2d7d8).
 
 - - -
 
