@@ -8,7 +8,7 @@
   ```
 
 
--  Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
+-  Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL:
   
     ```YML
     # Modelo
