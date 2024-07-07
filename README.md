@@ -1,43 +1,46 @@
 # B-ValleCode
 
-###### Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
-<details>
-  <summary><b>Modelo <i>application.yml</i></b></summary>
+### Pasos generales:
+- Asegúrate que todas las dependencias y configuraciones se resuelvan correctamente en el nuevo entorno (Windows, Based on Linux, etc) con el siguiente comando:
 
+  ```TXT
+  mvn clean install
+  ```
+
+
+-  Debes agregar el siguiente modelo dentro de la carpeta resources para la conexión a MySQL y MongoDB:
   
-  ```YML
-# Modelo
-spring:
-  datasource:
-    url: jdbc:mysql//localhost:3306/dbvallecode
-    username: root
-    password: 
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQLDialect
-  mail:
-    host: smtp.gmail.com
-    username: # Tu correo electrónico
-    password: # Contraseña generada por Gmail 
-    port: 587
-    properties:
+    ```YML
+    # Modelo
+    spring:
+      datasource:
+        url: jdbc:mysql//localhost:3306/dbvallecode
+        username: root
+        password: 
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      jpa:
+        hibernate:
+          ddl-auto: none
+          naming:
+            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        show-sql: true
+        database-platform: org.hibernate.dialect.MySQLDialect
       mail:
-        smtp:
-          starttls:
-            enable: true
-          auth: true
-cors:
-  allowed-methods: "*"
-  allowed-headers: "*"
-  exposed-headers: "*"
-```
-
-</details>
+        host: smtp.gmail.com
+        username: # Tu correo electrónico
+        password: # Contraseña generada por Gmail 
+        port: 587
+        properties:
+          mail:
+            smtp:
+              starttls:
+                enable: true
+              auth: true
+    cors:
+      allowed-methods: "*"
+      allowed-headers: "*"
+      exposed-headers: "*"
+    ```
 
 
 > [!IMPORTANT]
@@ -45,7 +48,7 @@ cors:
 
 - - -
 
-###### ¿Cómo crear un usuario?
+#### ¿Cómo crear un usuario?
 - Modificar el *endpoint* `admin/signup` a **permitAll()** para deshabilitar la autorización.
 ```JAVA
   /*
