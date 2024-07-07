@@ -49,49 +49,7 @@
 
 - - -
 
-#### ¿Cómo crear un usuario?
-- Modificar el *endpoint* `admin/signup` a **permitAll()** para deshabilitar la autorización.
-```JAVA
-  /*
-   * HttpSecurityConfig.java
-   */
-    authConfig.requestMatchers(HttpMethod.POST, "/admin/signup").permitAll();
-```
-- Antes de crear un nuevo usuario con el rol **STUDENT**, necesitarás crear un usuario **ADMIN**:
-```JSON
-{
-    "codeAlumni": "5555555555",
-    "email": "admin@ucvvirtual.edu.pe",
-    "username": "admin",
-    "names": "",
-    "lastNames": "",
-    "password": "123",
-    "role": "ADMIN",
-    "status": "Habilitado"
-}
-```
-> [!NOTE]
-> Realiza una petición `POST` a esta ruta: `http://localhost:8080/admin/signup`.
-> Puedes usar Postman para realizar las peticiones correspondientes.
-
-> Configurar la petición:
-- `body` > `raw` > `JSON`
-
-> Ejemplo del `JSON` a enviar:
-```JSON
-{
-    "codeAlumni": "7777777777",
-    "email": "alumni@ucvvirtual.edu.pe",
-    "username": "alum2024",
-    "names": "namexample",
-    "lastNames": "lastnamexample",
-    "password": "123",
-    "role": "STUDENT",
-    "status": "Habilitado"
-}
-```
-- - -
-
 #### Requisitos
-- Maven
-- JDK 17
+> Maven
+
+> JDK 17
