@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import collab.backend.mod.creation.model.Exercise;
 import collab.backend.mod.creation.repository.ExerciseRepository;
 import collab.backend.mod.evaluation.repository.ExerciseXUserRepository;
+import collab.backend.mod.login.model.User;
+import collab.backend.mod.login.repository.UserRepository;
 import collab.backend.mod.usrdata.model.UserAccount;
 import collab.backend.mod.usrdata.repository.UserAccountRepository;
 
@@ -30,6 +32,9 @@ public class DataStructureCodeExecutionService {
 
     @Autowired
     private UserAccountRepository userAccountRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -57,11 +62,12 @@ public class DataStructureCodeExecutionService {
         /*Set up false is null */
         finalValue = finalValue != null ? finalValue : false;
 
-        UserAccount idUserAccount = userAccountRepository.findByUsername(username).orElseThrow(
-            () -> {
-                throw new RuntimeException(username+" not found!");
-            }
-        );
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> {
+                throw new RuntimeException("User not found");
+            });
+
+        UserAccount idUserAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
         
         Exercise exercise = exerciseRepository.findExerciseByLabel(labelExercise).orElseThrow(
             () -> {

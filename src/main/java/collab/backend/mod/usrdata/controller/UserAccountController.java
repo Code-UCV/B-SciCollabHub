@@ -82,7 +82,7 @@ public class UserAccountController {
     public ResponseEntity<String> getAllDataByUsername(
         @Valid @RequestParam("username") String username
     ) {
-        String allData = userAccountServices.getAllDataUser(username);
+        String allData = userAccountServices.getAllDataByUser(username);
         
         return ResponseEntity.ok(allData);
     }

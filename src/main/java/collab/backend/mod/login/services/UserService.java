@@ -27,18 +27,19 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        user.setId(UUID.randomUUID().toString().split("-")[0]);
+        //user.setId(UUID.randomUUID().toString().split("-")[0]);
         addUserAccountJustUsername(user.getUsername());
         return userRepository.save(user);
     }
 
     private void addUserAccountJustUsername(String username) {
         UserAccount u = new UserAccount();
-        u.setUsername(username);
+        User user = userRepository.findByUsername(username).get();
+        u.setIdUser(Integer.parseInt(user.getId()));
         userAccountRepository.save(u);
     }
 
-    public User getUserById(String id) {
+    public User getUserById(int id) {
         return userRepository.findById(id).get();
     }
 
@@ -57,7 +58,7 @@ public class UserService {
         return userData;
     }
 
-    public User disableOrEnableUser(String id) {
+    public User disableOrEnableUser(int id) {
         User u = userRepository.findById(id)
             .orElseThrow(() -> {
                 throw new RuntimeException("User not found!");

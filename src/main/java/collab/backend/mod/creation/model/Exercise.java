@@ -23,7 +23,7 @@ import lombok.Setter;
 @Builder
 public class Exercise {
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID_EJERCICIO")
     @Setter(AccessLevel.NONE)
     private int id;
     @Column(name = "TIPO_PROBLEMA")

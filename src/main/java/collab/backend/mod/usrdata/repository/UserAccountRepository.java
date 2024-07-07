@@ -12,16 +12,23 @@ import collab.backend.mod.usrdata.model.UserAccount;
 import jakarta.transaction.Transactional;
 
 public interface UserAccountRepository extends JpaRepository<UserAccount, Integer> {
-    Optional<UserAccount> findByUsername(String username);
+    //Optional<UserAccount> findByUsername(String username);
 
     @Query(
-        value = "SELECT RANK_ "+
+        value = "SELECT RANKED.RANK_ "+
         "FROM ( "+
-        "   SELECT USERNAME, "+
-        "       ROW_NUMBER() OVER(ORDER BY PUNTAJE DESC) AS RANK_ "+
-        "   FROM CUENTA_USUARIOS "+
+        "   SELECT u.USERNAME, "+
+        "       ROW_NUMBER() OVER(ORDER BY SUM(e.PUNTOS) DESC) AS RANK_ "+
+        "   FROM USERS u "+
+        "   JOIN CUENTA_USUARIOS cu "+
+        "   ON u.ID_USER = cu.ID_USER "+
+        "   JOIN CUENTA_X_EJERCICIOS ce "+
+        "   ON cu.ID = ce.ID_CUENTA_USUARIO "+
+        "   JOIN EJERCICIOS e "+
+        "   ON e.ID_EJERCICIO = ce.ID_EJERCICIO "+
+        "   GROUP BY u.USERNAME "+
         ") AS RANKED "+
-        "WHERE USERNAME = :USERNAME",
+        "WHERE RANKED.USERNAME = :USERNAME",
         nativeQuery = true
     )
     Optional<String> getRankByUsername(
@@ -29,12 +36,15 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
     );
 
     @Query(
-        value = "SELECT PUNTAJE "+
-        "FROM CUENTA_USUARIOS "+
-        "WHERE USERNAME = :USERNAME",
+        value = "SELECT SUM(e.PUNTOS) "+
+        "FROM USERS u "+
+        "JOIN CUENTA_USUARIOS cu ON u.ID_USER = cu.ID_USER "+
+        "JOIN CUENTA_X_EJERCICIOS ce ON ce.ID_CUENTA_USUARIO = cu.ID "+
+        "JOIN EJERCICIOS e ON e.ID_EJERCICIO = ce.ID_EJERCICIO "+
+        "WHERE u.USERNAME = :USERNAME",
         nativeQuery = true
     )
-    Optional<String> getPointsByUsername(
+    Optional<Integer> getPointsByUsername(
         @Param("USERNAME") String username
     );
 
@@ -42,8 +52,8 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
         value = "SELECT e.CATEGORÍA, SUM(e.PUNTOS) "+
         "FROM CUENTA_X_EJERCICIOS c "+
         "JOIN EJERCICIOS e "+
-        "ON e.ID = c.ID_EJERCICIO "+
-        "WHERE ID_CUENTA_USUARIO = :ID_USER "+
+        "ON e.ID_EJERCICIO = c.ID_EJERCICIO "+
+        "WHERE c.ID_CUENTA_USUARIO = :ID_USER "+
         "GROUP BY e.CATEGORÍA",
         nativeQuery = true
     )
@@ -66,7 +76,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
 
     @Query(
         value = "SELECT USERNAME "+
-        "FROM CUENTA_USUARIOS",
+        "FROM USERS",
         nativeQuery = true
     )
     String[] allUsers();
@@ -75,7 +85,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
         value = "SELECT e.TÍTULO, e.PUNTOS, c.ESTADO "+
         "FROM CUENTA_X_EJERCICIOS c "+
         "JOIN EJERCICIOS e "+
-        "ON e.ID = c.ID_EJERCICIO "+
+        "ON e.ID_EJERCICIO = c.ID_EJERCICIO "+
         "WHERE c.ID_CUENTA_USUARIO = :ID",
         nativeQuery = true
     )

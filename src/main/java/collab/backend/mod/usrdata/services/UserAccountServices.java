@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import collab.backend.mod.login.model.User;
+import collab.backend.mod.login.repository.UserRepository;
 import collab.backend.mod.usrdata.model.UserAccount;
 import collab.backend.mod.usrdata.repository.UrlRepository;
 import collab.backend.mod.usrdata.repository.UserAccountRepository;
@@ -18,6 +20,9 @@ import collab.backend.mod.usrdata.repository.UserAccountRepository;
 public class UserAccountServices {
     @Autowired
     private UserAccountRepository userAccountRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UrlRepository urlRepository;
@@ -32,36 +37,41 @@ public class UserAccountServices {
     }
 
     public String getPointsByUsername(String username) {
-        Optional<String> points = userAccountRepository.getPointsByUsername(username);
+        Optional<Integer> points = userAccountRepository.getPointsByUsername(username);
 
         if (points.isEmpty())
             throw new RuntimeException(username+" hasn't points.");
 
-        return points.get();
+        return String.valueOf(points.get());
     }
 
-    public String getAllDataUser(String username) {
-        UserAccount user = userAccountRepository.findByUsername(username)
-        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+    public String getAllDataByUser(String username) {
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+
+        UserAccount userAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
 
         String rank = userAccountRepository.getRankByUsername(username)
         .orElseThrow(() -> new NoSuchElementException("No rank found for username: " + username));
 
         StringBuilder strBuilder = new StringBuilder();
 
+        int points = userAccountRepository.getPointsByUsername(user.getUsername()).get();
 
         strBuilder.append(
-            user.getBio()+"¬"+rank+"¬"+user.getPoints()
+            userAccount.getBio()+"¬"+rank+"¬"+points
         );
 
         return strBuilder.toString();
     }
 
     public String showAllUrls(String username) {
-        UserAccount user = userAccountRepository.findByUsername(username)
-        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
 
-        String[] urls = urlRepository.findLinksById(user.getId());
+        UserAccount userAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
+
+        String[] urls = urlRepository.findLinksById(userAccount.getId());
 
         String result = Arrays.stream(urls)
         .collect(Collectors.joining(","));
@@ -71,12 +81,14 @@ public class UserAccountServices {
     }
 
     public String getPointsAndCategoryByUsername(String username) {
-        UserAccount user = userAccountRepository.findByUsername(username)
-        .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+        User user = userRepository.findByUsername(username) 
+            .orElseThrow(() -> new NoSuchElementException("No user found with username: " + username));
+
+        UserAccount userAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
 
         StringJoiner rows = new StringJoiner("-");
 
-        for(String[] items : userAccountRepository.getPointsAndCategoryById(user.getId())) {
+        for(String[] items : userAccountRepository.getPointsAndCategoryById(userAccount.getId())) {
             StringJoiner values = new StringJoiner(",");
             for(String str : items ) {
                 values.add(str);
@@ -88,15 +100,17 @@ public class UserAccountServices {
     }
 
     public void editBio(String bio, String username) {
-        UserAccount user = userAccountRepository.findByUsername(username).get();
+        User user =  userRepository.findByUsername(username).get();
+        UserAccount userAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
 
-        userAccountRepository.updateBio(bio, user.getId());
+        userAccountRepository.updateBio(bio, userAccount.getId());
     }
 
     public void addUrls(String link, String username) {
-        UserAccount user = userAccountRepository.findByUsername(username).get();
+        User user = userRepository.findByUsername(username).get();
+        UserAccount userAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
         
-        int id = user.getId();
+        int id = userAccount.getId();
 
         urlRepository.addNewUrl(link, id);
     }
@@ -108,14 +122,16 @@ public class UserAccountServices {
     }
 
     public String getExercisesSolvedByUser(String username) {
-        UserAccount user = userAccountRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
             .orElseThrow(
                 () -> {
                     throw new RuntimeException("User not found");
                 }
             );
+
+        UserAccount userAccount = userAccountRepository.findById(Integer.parseInt(user.getId())).get();
         
-        int userId = user.getId();
+        int userId = userAccount.getId();
         
         StringJoiner rows = new StringJoiner("-");
 

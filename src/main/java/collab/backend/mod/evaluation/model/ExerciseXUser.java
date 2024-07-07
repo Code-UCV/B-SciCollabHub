@@ -13,7 +13,7 @@ public class ExerciseXUser {
     private int id;
     @Column(name = "ID_CUENTA_USUARIO")
     private int idUserAccount;
-    @Column(name = "ID_EJERCICIOS")
+    @Column(name = "ID_EJERCICIO")
     private int idExercise;
     @Column(name = "ESTADO")
     private boolean isSolved;

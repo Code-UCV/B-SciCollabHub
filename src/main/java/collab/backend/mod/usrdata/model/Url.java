@@ -13,8 +13,8 @@ public class Url {
     @Id
     @Column(name = "ID")
     private int id;
-    @Column(name = "URL")
-    private String url;
     @Column(name = "ID_CUENTA_USUARIOS")
     private int userAccount;
+    @Column(name = "URL")
+    private String url;
 }

@@ -46,7 +46,7 @@ public class AdminController {
 
     @PutMapping("/disableorenableuser")
     public ResponseEntity<?> disableOrEnableUser(
-        @Valid @RequestParam String id
+        @Valid @RequestParam int id
     ) {
         try {
             User u = userService.disableOrEnableUser(id);
